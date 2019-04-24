@@ -115,7 +115,15 @@ public class GuiModel extends DefaultTableModel {
 
     public ResultSet searchByAlbum(String val) throws SQLException {
         // TODO: implement this
-        return null;
+    	String query = 
+    			"SELECT al.title, al.year, al.id" +
+    			"FROM album AS al " +
+    			"WHERE lower(al.title) LIKE lower(?) " +
+    			"ORDER BY al.title, al.year";
+    	
+    	PreparedStatement ps = db.prepareStatement(query);
+    	ps.setString(1,  "%" + val + "%");
+        return ps.executeQuery();
     }
 
     public Vector<String> getArtists() throws SQLException {
